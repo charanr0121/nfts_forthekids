@@ -1,21 +1,9 @@
-// require("dotenv").config();
 import Web3 from "web3";
 import Web3Modal from "web3modal";
-
-// const API_URL = process.env.API_URL;
-// import {createAlchemyWeb3} from "@alch/alchemy-web3"
-// const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
-// const w3 = createAlchemyWeb3(API_URL);
-
-// console.log(w3)
 
 const ethapi = require('etherscan-api').init(process.env.ETHAPI)
 
 const contractABI = require("../../nft_contract/artifacts/contracts/NFT.sol/NMIxHEROs.json").abi;
-// console.log(contractABI)
-// contractABI = contractABI.abi
-console.log(contractABI)
-
 const contractAddress = "0x7976af5458b2dcF7d6E57E765e7822D180df5DEe";
 
 var web3;
@@ -123,12 +111,6 @@ export const getCurrentWalletConnected = async () => {
   }
 };
 
-// async function getContractFromAddress(contractAddress) {
-//   let contractABI = (await ethapi.contract.getabi(contractAddress)).result
-//   let tokenContract = new web3.eth.Contract(contractABI,contractAddress)
-//   return tokenContract
-// }
-
 export const mintNFT = async () => {
   var nfts = [
     "QmdrSuKLZWUhheH4xsviZhpcanfY3kueTaJnRwpnzbhiqe",
@@ -145,12 +127,11 @@ export const mintNFT = async () => {
   console.log(metadataUrl);
   const tokenURI = metadataUrl;
 
-  // window.contract = await getContractFromAddress(contractAddress)
-  console.log("OPK")
   console.log(contractABI)
   window.contract = await new web3.eth.Contract(contractABI, contractAddress);
   console.log(window.contract)
-
+  console.log(window.ethereum.selectedAddress)
+  
   const transactionParameters = {
     to: contractAddress, // Required except during contract publications.
     from: window.ethereum.selectedAddress, // must match user's active address.

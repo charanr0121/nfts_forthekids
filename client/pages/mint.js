@@ -4,11 +4,10 @@ import {
   getCurrentWalletConnected,
   mintNFT,
 } from "../util/interact.js";
-import { Button, Header, Heading, Clock, Box, Main, Image } from "grommet";
+import { Button, Header, Heading, Box, Main, Image } from "grommet";
 import Lottie from "lottie-react";
 import crypto from "../assets/lotties/crypto.json";
-import axios from 'axios';
-
+import axios from "axios";
 
 export default function FirstClass() {
   const [walletAddress, setWallet] = useState("");
@@ -16,8 +15,8 @@ export default function FirstClass() {
   const [status, setStatus] = useState("Ogi");
   const [buttonLabel, setButtonLabel] = useState("Connect Wallet");
   const [loggedIn, setLoggedIn] = useState(false);
-  const [metadataUrl, setMetadataUrl] = useState("")
-  const [imgurl, setImgurl] = useState("")
+  const [metadataUrl, setMetadataUrl] = useState("");
+  const [imgurl, setImgurl] = useState("");
 
   useEffect(async () => {
     const { address, balance, status } = await getCurrentWalletConnected();
@@ -83,22 +82,22 @@ export default function FirstClass() {
     }
   };
 
-  if (metadataUrl == ""){
-    var myNFT = ""
+  if (metadataUrl == "") {
+    var myNFT = "";
   } else {
     axios
-    .get(metadataUrl)
-    .then((res) => {
-      var data = res.data;
-      setImgurl(data.image)
-      console.log(data)
-    })
-    .catch((error) => {
-      console.log("THIS IS THE ERROR")
-      console.log(error)
-    });
-    
-    var myNFT = <Image fit="cover" src={imgurl} />
+      .get(metadataUrl)
+      .then((res) => {
+        var data = res.data;
+        setImgurl(data.image);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log("THIS IS THE ERROR");
+        console.log(error);
+      });
+
+    var myNFT = <Image fit="cover" src={imgurl} />;
   }
 
   return (
@@ -107,27 +106,31 @@ export default function FirstClass() {
         <Heading margin={{ left: "2%" }}> NFT Heroes </Heading>
         <Button
           primary={!loggedIn}
-          color="#fca311"
+          color="rgb(96,102,246)"
           label={buttonLabel}
           id="walletButton"
           onClick={connectWalletPressed}
-          // size="large"
           margin={{ right: "2%" }}
         />
       </Header>
-      {/* <Box
+      <Box
         direction="row"
         justify="center"
         // border={{ color: 'brand', size: 'large' }}
         pad="medium"
-      > */}
-      <Lottie loop style={{ height: 400 }} animationData={crypto} />
-      <Button primary label="Mint" onClick={onMintPressed} />
-
-      {/* </Box> */}
-      <Box width={"large"}>
-        {myNFT}
+      >
+        <Lottie loop style={{ height: 400 }} animationData={crypto} />
+        <Box direction="column" justify="center">
+          <Button
+            primary
+            label="Mint"
+            color="rgb(96,102,246)"
+            style={{ width: "auto", height: 50 }}
+            onClick={onMintPressed}
+          />
+        </Box>
       </Box>
+      <Box width={"large"}>{myNFT}</Box>
 
       {/* <Clock type="digital" run="backward" time="2018-10-23T10:37:45"/> */}
     </Main>
