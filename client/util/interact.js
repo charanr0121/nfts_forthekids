@@ -24,9 +24,11 @@ export const connectWallet = async () => {
 
       const web3Modal = new Web3Modal({
         network: "rinkeby",
-        cacheProvider: true,
+        cacheProvider: false,
         providerOptions,
       });
+      console.log(providerOptions)
+      console.log(web3Modal)
 
       const provider = await web3Modal.connect();
       web3 = new Web3(provider);
@@ -42,6 +44,7 @@ export const connectWallet = async () => {
       };
       return obj;
     } catch (err) {
+      console.log(err)
       return {
         address: "",
         status: err.message,
@@ -49,6 +52,7 @@ export const connectWallet = async () => {
       };
     }
   } else {
+    console.log("window.ethereum not present")
   }
 };
 
@@ -131,7 +135,7 @@ export const mintNFT = async () => {
   window.contract = await new web3.eth.Contract(contractABI, contractAddress);
   console.log(window.contract)
   console.log(window.ethereum.selectedAddress)
-  
+
   const transactionParameters = {
     to: contractAddress, // Required except during contract publications.
     from: window.ethereum.selectedAddress, // must match user's active address.
